@@ -1,0 +1,91 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /api/v1/patient/{id}:
+    get:
+      tags:
+      - patient-info-controller
+      operationId: getPatientById
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PatientDto'
+    put:
+      tags:
+      - patient-info-controller
+      operationId: putPatient
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PatientDto'
+        required: true
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/PatientDto'
+  /api/v1/patient:
+    get:
+      tags:
+      - patient-info-controller
+      operationId: getPatients
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PatientDto'
+components:
+  schemas:
+    PatientDto:
+      type: object
+      properties:
+        patientId:
+          type: integer
+          format: int32
+        email:
+          type: string
+        title:
+          type: string
+        firstName:
+          type: string
+        lastName:
+          type: string
+        dob:
+          type: string
+        contactNumber:
+          type: string
+        password:
+          type: string
+        gender:
+          type: string
+        address:
+          type: string

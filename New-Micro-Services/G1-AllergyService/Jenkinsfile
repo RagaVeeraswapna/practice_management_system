@@ -1,0 +1,32 @@
+pipeline{
+	agent any
+	stages{
+		stage('checkout'){
+			steps{
+				git branch: "main", url: 'https://github.com/amankukreti583/g1-allergy-service.git'
+				}			
+			}
+			
+			stage('Build'){
+			steps{
+				sh 'chmod a+x mvnw'
+				sh './mvnw clean package -DskipTests=true'
+				}
+				
+				post{
+					always{
+					archiveArtifascts 'target/*.jar'
+					}
+					
+				}
+				
+			}
+			stage(DockerBuild){
+			steps{
+				sh 'docker build -t aman583/myallergyservice:latest .'
+				}
+			}
+		}
+
+
+}

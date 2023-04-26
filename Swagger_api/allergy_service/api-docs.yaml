@@ -1,0 +1,53 @@
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+- url: http://localhost:8080
+  description: Generated server url
+paths:
+  /api/v1/allergy:
+    get:
+      tags:
+      - allergy-controller
+      operationId: getAllAllergies
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/AllergyDto'
+  /api/v1/allergy/{id}:
+    get:
+      tags:
+      - allergy-controller
+      operationId: getAllergy
+      parameters:
+      - name: id
+        in: path
+        required: true
+        schema:
+          type: integer
+          format: int32
+      responses:
+        "200":
+          description: OK
+          content:
+            '*/*':
+              schema:
+                $ref: '#/components/schemas/AllergyDto'
+components:
+  schemas:
+    AllergyDto:
+      type: object
+      properties:
+        allergyId:
+          type: integer
+          format: int32
+        allergyName:
+          type: string
+        allergyNotes:
+          type: string
